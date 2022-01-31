@@ -95,5 +95,6 @@ class UserController {
         `;
 
         this.tableEl.appendChild(tr);
+        console.log(dataUser)
     }
 }
