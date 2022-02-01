@@ -127,13 +127,27 @@ class UserController {
 
             for (let name in json) {
                 let field = form.querySelector('[name=' + name.replace('_', '') + ']');
+                console.log(field)
 
                 if(field) {
-                    if(field.type == 'file') continue;
+                    switch (field.type) {
+                        case 'file':
+                            continue;
+                        break;
 
-                    field.value = json[name];
+                        case 'radio':
+                            field = form.querySelector('[name=' + name.replace('_', '') + '][value=' + json[name] + ']');
+                            field.checked = true;
+                        break;
+
+                        case 'checkbox':
+                            field.checked = json[name];
+                        break;
+
+                        default:
+                            field.value = json[name];
+                    }
                 }
-
             } 
 
             this.showPanelChange('none', 'block');
