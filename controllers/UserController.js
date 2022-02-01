@@ -3,8 +3,15 @@ class UserController {
         this.formEl = document.getElementById(formId);
         this.tableEl = document.getElementById(tableId);
         this.onSubmit();
+        this.onEdit();
     }
     
+    onEdit() {
+        document.querySelector('#box-user-update .btn-cancel').addEventListener('click', event => {
+            this.showPanelChange('block', 'none');
+        });
+    }
+
     onSubmit() {
         this.formEl.addEventListener('submit', event => {
             event.preventDefault();
@@ -109,14 +116,27 @@ class UserController {
             <td>${(dataUser.admin) ? 'Sim' : 'Não'}</td>
             <td>${Utils.dateFormat(dataUser.register)}</td>
             <td>
-                <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>
+                <button type="button" class="btn btn-primary btn-edit btn-xs btn-flat">Editar</button>
                 <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
             </td>
         `;
 
+        tr.querySelector('.btn-edit').addEventListener('click', event => {
+            console.log(JSON.parse(tr.dataset.user));
+            
+            this.showPanelChange('none', 'block');
+        });
+
         this.tableEl.appendChild(tr);
 
         this.updateCount();
+    }
+
+    // aula 21 caso precise
+    showPanelChange(boxCreate, boxUpdate) {
+        document.querySelector('#box-user-create').style.display = boxCreate;
+
+        document.querySelector('#box-user-update').style.display = boxUpdate;
     }
 
     updateCount() {
