@@ -47,7 +47,7 @@ class UserController {
                         <td>${Utils.dateFormat(result._register)}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-edit btn-xs btn-flat">Editar</button>
-                            <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
+                            <button type="button" class="btn btn-danger btn-delete btn-xs btn-flat">Excluir</button>
                         </td>
                     `;
     
@@ -168,7 +168,7 @@ class UserController {
             <td>${Utils.dateFormat(dataUser.register)}</td>
             <td>
                 <button type="button" class="btn btn-primary btn-edit btn-xs btn-flat">Editar</button>
-                <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
+                <button type="button" class="btn btn-danger btn-delete btn-xs btn-flat">Excluir</button>
             </td>
         `;
 
@@ -180,6 +180,14 @@ class UserController {
     }
 
     addEventTr(tr) {
+        tr.querySelector('.btn-delete').addEventListener('click', event => {
+            if(confirm('Deseja mesmo excluir?')) {
+                tr.remove();
+
+                this.updateCount();
+            }
+        });
+
         tr.querySelector('.btn-edit').addEventListener('click', event => {
             let json = JSON.parse(tr.dataset.user);
 
@@ -187,7 +195,6 @@ class UserController {
 
             for (let name in json) {
                 let field = this.formUpdateEl.querySelector('[name=' + name.replace('_', '') + ']');
-
                 if(field) {
                     switch (field.type) {
                         case 'file':
