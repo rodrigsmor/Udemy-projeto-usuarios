@@ -82,7 +82,6 @@ class UserController {
 
                     this.insert(values);
                     this.addLine(values);
-
                     this.formEl.reset();
 
                     btn.disabled = false;
@@ -159,10 +158,10 @@ class UserController {
     }
     
     getUsersStorage() {
-        let users = [];
+        let users = new Array();
     
-        if(sessionStorage.getItem('users@hcode')) {
-            users = JSON.parse(sessionStorage.getItem('users@hcode'));
+        if(localStorage.getItem('users@hcode')) {
+            users = JSON.parse(localStorage.getItem('users@hcode'));
         }
 
         return users;
@@ -177,15 +176,15 @@ class UserController {
             user.loadFromJSON(dataUser);
 
             this.addLine(user);
-        });
+        }); 
     }
     
     insert(data) {
         let users = this.getUsersStorage();
     
-        users.push[data];
-    
-        sessionStorage.setItem('users@hcode', JSON.stringify(users));
+        users.push(data);
+
+        localStorage.setItem('users@hcode', JSON.stringify(users));
     }
 
     addLine(dataUser) {
